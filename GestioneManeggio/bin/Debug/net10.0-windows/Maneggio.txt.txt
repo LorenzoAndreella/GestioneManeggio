@@ -1,0 +1,10 @@
+Salomone;Bruno;2016;M
+Gertrude;Albino;2020;F
+Salvatore;Stallone;1998;M
+Germana;Rosa;2026;F
+Michaela;Maculato;2003;F
+Mattia;American;2014;M
+Mercurio;Britain;2000;M
+Antenora;Pelo corto;2016;F
+Afrodite;Pelo lungo;2009;F
+Matilde;Bolivian;2005;F
