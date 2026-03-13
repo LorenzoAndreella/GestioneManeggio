@@ -35,35 +35,40 @@ namespace GestioneManeggio
 
         string[] cavalli = new string[10];          //array per leggere i dati dal file .txt
 
-        string path;
+        string path = "maneggio_cavalli.txt";
         public Form1()
         {
             InitializeComponent();      
-            OpenFileDialog open = new OpenFileDialog();         //aprire il file .txt
-            open.Title = "Seleziona il file .txt";              //filtro per visualizzare solo i file .txt
-                    
-            if (open.ShowDialog() == DialogResult.OK)        //se l'utente ha selezionato un file e ha cliccato su "OK"
+            
+            if(!File.Exists(path))
             {
-                path = open.FileName;                          //salvo il percorso del file in una variabile
-                cavalli = File.ReadAllLines(path);              //leggo tutte le righe e salvo in array cavalli
-
-                foreach (string cavallo in cavalli) 
+                using (File.Create(path)) { };
+            }
+            using (StreamReader sr = new StreamReader(path)) 
+            {
+           
+                string linea;
+                while(!sr.EndOfStream)
                 {
-                    string[]  datiCavallo = cavallo.Split(';');             //divido la stringa da ";"
-                    string nome = datiCavallo[0];
-                    string razza = datiCavallo[1];
-                    int nascita = int.Parse(datiCavallo[2]);
-                    char sesso = char.Parse(datiCavallo[3]);
+                    linea = sr.ReadLine();
+                    string[] dati = linea.Split(";");
+                    string nome = dati[0];
+                    string razza = dati[1];
+                    int nascita = int.Parse(dati[2]);
+                    char sesso = char.Parse(dati[3]);
 
-                    Cavallo c = new Cavallo(nome, razza, nascita, sesso);       
-                    maneggio.Add(c);                
-                    lstManeggio.Items.Add(c.StampaLst());
+                    Cavallo cavallo = new Cavallo(nome, razza, nascita, sesso);
+
+                    maneggio.Add(cavallo);
+                    lstManeggio.Items.Add(cavallo.StampaLst());
                 }
+                
+            }
                 txtNome.Text = "";
                 txtNascita.Text = "";
                 txtRazza.Text = "";
 
-            }
+            
 
         }
         private void btnAggiungi_Click(object sender, EventArgs e)
@@ -149,7 +154,7 @@ namespace GestioneManeggio
         {
             if (lstManeggio.SelectedIndex == -1)
             {
-                txtRisposta.Text = "Seleziona una persona!";
+                txtRisposta.Text = "Seleziona un cavallo!";
                 return;
             }
             int i = lstManeggio.SelectedIndex;
@@ -194,7 +199,7 @@ namespace GestioneManeggio
         {
              if (lstManeggio.SelectedIndex == -1)
              {
-                txtRisposta.Text = "Seleziona una persona!";
+                txtRisposta.Text = "Seleziona un cavallo!";
                 return;
              }
              int i = lstManeggio.SelectedIndex;
